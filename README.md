@@ -1,10 +1,6 @@
 # Company-management
 A company management system that allow a general admin to create and remove companies and allow company admins to add or remove employees to the company or to teams.
 
-### External Documentation:
-
-* [Django](https://docs.djangoproject.com/en/2.0/releases/2.0/)
-* [Dropbox API](http://dropbox-sdk-python.readthedocs.io/en/latest/)
 
 ### Requirements to run locally:
 
