@@ -1,0 +1,52 @@
+{% load static %}
+
+{% load icons %}
+
+
+{% load bootstrap4 %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Management</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#">Company Management</a>
+
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item"><p class="navbar-text">Welcome {{user.username}} |</p></li>
+            {% if user.employee.company %}
+            <li class="nav-item"><a class="nav-link" href="{%url 'company' %}">My Company</a></li>
+            {% endif %}
+            <li class="nav-item"><a class="nav-link" href="{%url 'profile' user.username %}">My Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="{%url 'list_invitation' %}">Job Invitations</a></li>
+            <li class="nav-item"><a class="nav-link" href="{%url 'account_logout' %}">Sign out</a></li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{%url 'account_signup' %}">Sign up</a></li>
+            <li class="nav-item"><a class="nav-link" href="{%url 'account_login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<br>
+
+{% bootstrap_messages %}
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>

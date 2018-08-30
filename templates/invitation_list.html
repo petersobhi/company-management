@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load icons %}
+
+{% load bootstrap4 %}
+{% load icons %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<h4 style="text-align: center">Job invitations</h4>
+<div class="row">
+    <div class="col-md-12">
+        {% if invitations %}
+        {% for invitation in invitations %}
+        <div class="card">
+            <div class="card-header">
+                {{invitation.company}}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{invitation.message}}</p>
+
+                <a href="{% url 'accept_invitation' invitation.pk %}" class="btn btn-success"
+                   style="float:right; margin: 0 5px">Accept</a>
+                <a href="{% url 'delete_invitation' invitation.pk %}" class="btn btn-danger"
+                   style="float:right; margin: 0 5px">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No job invitations</p>
+        {% endif %}
+    </div>
+</div>
+<br>
+
+
+{% endblock %}

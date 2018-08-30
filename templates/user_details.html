@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load icons %}
+
+{% load bootstrap4 %}
+{% load icons %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<div class="card" style="width: 25rem; margin: 0 auto;">
+    {% if profile_user.employee.profile_picture %}
+    <img class="card-img-top" src="{{profile_user.employee.profile_picture.url}}" alt="Card image cap">
+    {% else %}
+    <img class="card-img-top" src="https://dummyimage.com/360x360/ffffff/000000.png&text=No+Image+Found"
+         alt="Card image cap">
+    {% endif %}
+    <div class="card-body">
+        <h4 class="card-title">{{ profile_user.first_name }} {{ profile_user.last_name }}
+            {% if user == profile_user %}
+            <button class="btn btn-primary" data-toggle="modal" data-target="#editProfile" style="float:right">
+                Edit profile
+            </button>
+            {% endif %}
+        </h4>
+        <p class="card-text">{% icon 'book' %} {{ profile_user.employee.biography }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            {% icon 'briefcase' %} {{profile_user.employee.job_title|default_if_none:"Unemployed" }}
+        </li>
+        <li class="list-group-item">
+            {% icon 'building' %} {{ profile_user.employee.company|default_if_none:"Unemployed" }}
+        </li>
+        <li class="list-group-item">
+            {% icon 'calendar' %} {{ profile_user.employee.birthdate }}
+        </li>
+    </ul>
+</div>
+
+<div class="modal" id="editProfile">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Profile</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <form method="post" action="{% url 'update_profile' %}">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        Add
+                    </button>
+                    {% endbuttons %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
